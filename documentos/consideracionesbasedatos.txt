@@ -1,0 +1,16 @@
+*** PRIMERO VER EL VIDEO DE CONFIGURACION POSTGRES PARA UNION CON LA PROGRAMACION
+http://127.0.0.1:22915/browser/  ESTA DIRECCION PARA EL USO DE PG ADMIN V4
+
+
+para borrar una poliza
+** eliminar de aeronave
+** eliminar empleado
+** eliminar repuesto
+
+para borrrar un usuario
+
+** eliminar poliza
+** eliminar aeronave
+
+un usuario que consta en una poliza no se puede borrar ya que esa poliza relacionada
+al usuario .. tambien se ve involucada con la aeronave con el id-poliza

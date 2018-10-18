@@ -1,0 +1,13 @@
+conectar y configurar para postgres -- ver primeros minutos
+https://www.youtube.com/watch?v=Qo0g6Z41alg&t=11s
+
+
+-- metodos de conexion y manejo de base de datos
+https://informaticapc.com/tutorial-php/bases-de-datos-postgresql.php
+
+---calendario
+https://desarrolloweb.com/articulos/implementar-plugin-calendario-jquery.html
+
+// PDF PRIMERO DESCARGAR LIBRERIA FPDF
+http://www.forosdelweb.com/f18/como-hacer-reporte-fpdf-1033348/
+

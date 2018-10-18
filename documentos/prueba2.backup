@@ -1,0 +1,1094 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.21
+-- Dumped by pg_dump version 9.2.21
+-- Started on 2017-09-09 09:10:55
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2058 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 169 (class 1259 OID 16992)
+-- Name: aeronave; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE aeronave (
+    id_aeronave integer NOT NULL,
+    matricula character varying(7),
+    tipo_aeronave character varying(20),
+    marca_aeronave character varying(20),
+    modelo_aeronave character varying(20),
+    id_grupo integer,
+    id_poliza integer,
+    valor_asegurado money
+);
+
+
+ALTER TABLE public.aeronave OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 16995)
+-- Name: aeronave_id_aeronave_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aeronave_id_aeronave_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.aeronave_id_aeronave_seq OWNER TO postgres;
+
+--
+-- TOC entry 2059 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: aeronave_id_aeronave_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE aeronave_id_aeronave_seq OWNED BY aeronave.id_aeronave;
+
+
+--
+-- TOC entry 171 (class 1259 OID 16997)
+-- Name: aseguradora; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE aseguradora (
+    id_aseguradora integer NOT NULL,
+    nombre_aseguradora character varying(30),
+    direccion_aseguradora character varying(30),
+    telefono_aseguradora character varying(10)
+);
+
+
+ALTER TABLE public.aseguradora OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 17000)
+-- Name: aseguradora_id_aseguradora_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aseguradora_id_aseguradora_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.aseguradora_id_aseguradora_seq OWNER TO postgres;
+
+--
+-- TOC entry 2060 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: aseguradora_id_aseguradora_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE aseguradora_id_aseguradora_seq OWNED BY aseguradora.id_aseguradora;
+
+
+--
+-- TOC entry 173 (class 1259 OID 17002)
+-- Name: cargo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE cargo (
+    id_cargo integer NOT NULL,
+    nombre_cargo character varying(20),
+    descripcion_cargo character varying(60)
+);
+
+
+ALTER TABLE public.cargo OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 17005)
+-- Name: cargo_id_cargo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cargo_id_cargo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cargo_id_cargo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2061 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: cargo_id_cargo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cargo_id_cargo_seq OWNED BY cargo.id_cargo;
+
+
+--
+-- TOC entry 175 (class 1259 OID 17007)
+-- Name: empleado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE empleado (
+    id_empleado integer NOT NULL,
+    nombre_empleado character varying(20),
+    direccion_empleado character varying(20),
+    telefono_empleado character varying(10),
+    id_cargo integer,
+    id_poliza integer
+);
+
+
+ALTER TABLE public.empleado OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 17010)
+-- Name: empleado_id_empleado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE empleado_id_empleado_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.empleado_id_empleado_seq OWNER TO postgres;
+
+--
+-- TOC entry 2062 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: empleado_id_empleado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE empleado_id_empleado_seq OWNED BY empleado.id_empleado;
+
+
+--
+-- TOC entry 177 (class 1259 OID 17012)
+-- Name: estado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE estado (
+    id_estado integer NOT NULL,
+    nombre_estado character varying(20),
+    fecha_inicio date,
+    fecha_fin date,
+    dias integer,
+    valor_dia money,
+    valor_total money,
+    id_aeronave integer
+);
+
+
+ALTER TABLE public.estado OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 17015)
+-- Name: estado_id_estado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE estado_id_estado_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.estado_id_estado_seq OWNER TO postgres;
+
+--
+-- TOC entry 2063 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: estado_id_estado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE estado_id_estado_seq OWNED BY estado.id_estado;
+
+
+--
+-- TOC entry 179 (class 1259 OID 17017)
+-- Name: grupo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE grupo (
+    id_grupo integer NOT NULL,
+    nombre_grupo character varying(10),
+    ciudad_grupo character varying(20)
+);
+
+
+ALTER TABLE public.grupo OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 17020)
+-- Name: grupo_id_grupo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE grupo_id_grupo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grupo_id_grupo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2064 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: grupo_id_grupo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE grupo_id_grupo_seq OWNED BY grupo.id_grupo;
+
+
+--
+-- TOC entry 181 (class 1259 OID 17022)
+-- Name: perfil; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE perfil (
+    id_perfil integer NOT NULL,
+    nombre_perfil character varying(30)
+);
+
+
+ALTER TABLE public.perfil OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 17025)
+-- Name: perfil_id_perfil_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE perfil_id_perfil_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.perfil_id_perfil_seq OWNER TO postgres;
+
+--
+-- TOC entry 2065 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: perfil_id_perfil_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE perfil_id_perfil_seq OWNED BY perfil.id_perfil;
+
+
+--
+-- TOC entry 183 (class 1259 OID 17027)
+-- Name: poliza; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE poliza (
+    id_poliza integer NOT NULL,
+    codigo_poliza character varying(10),
+    nombre_poliza character varying(30),
+    fecha_inicio date,
+    fecha_fin date,
+    id_usuario integer,
+    id_aseguradora integer,
+    valor_poliza money
+);
+
+
+ALTER TABLE public.poliza OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 17030)
+-- Name: poliza_id_poliza_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE poliza_id_poliza_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.poliza_id_poliza_seq OWNER TO postgres;
+
+--
+-- TOC entry 2066 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: poliza_id_poliza_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE poliza_id_poliza_seq OWNED BY poliza.id_poliza;
+
+
+--
+-- TOC entry 185 (class 1259 OID 17032)
+-- Name: repuesto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE repuesto (
+    id_repuesto integer NOT NULL,
+    nombre_repuesto character varying(20),
+    codigo_repuesto character varying(10),
+    serie_repuesto character varying(10),
+    id_poliza integer
+);
+
+
+ALTER TABLE public.repuesto OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 17035)
+-- Name: repuesto_id_repuesto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE repuesto_id_repuesto_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.repuesto_id_repuesto_seq OWNER TO postgres;
+
+--
+-- TOC entry 2067 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: repuesto_id_repuesto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE repuesto_id_repuesto_seq OWNED BY repuesto.id_repuesto;
+
+
+--
+-- TOC entry 187 (class 1259 OID 17037)
+-- Name: siniestro; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE siniestro (
+    id_siniestro integer NOT NULL,
+    fecha_siniestro date,
+    descripcion_siniestro character varying(200),
+    id_aeronave integer
+);
+
+
+ALTER TABLE public.siniestro OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 17040)
+-- Name: siniestro_id_siniestro_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE siniestro_id_siniestro_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.siniestro_id_siniestro_seq OWNER TO postgres;
+
+--
+-- TOC entry 2068 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: siniestro_id_siniestro_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE siniestro_id_siniestro_seq OWNED BY siniestro.id_siniestro;
+
+
+--
+-- TOC entry 189 (class 1259 OID 17042)
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE usuarios (
+    id_usuario integer NOT NULL,
+    nombre_usuario character varying(30),
+    username character varying(20),
+    password character varying(10),
+    id_perfil integer
+);
+
+
+ALTER TABLE public.usuarios OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 17045)
+-- Name: usuarios_id_usuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE usuarios_id_usuario_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuarios_id_usuario_seq OWNER TO postgres;
+
+--
+-- TOC entry 2069 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: usuarios_id_usuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE usuarios_id_usuario_seq OWNED BY usuarios.id_usuario;
+
+
+--
+-- TOC entry 1870 (class 2604 OID 17047)
+-- Name: id_aeronave; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aeronave ALTER COLUMN id_aeronave SET DEFAULT nextval('aeronave_id_aeronave_seq'::regclass);
+
+
+--
+-- TOC entry 1871 (class 2604 OID 17048)
+-- Name: id_aseguradora; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aseguradora ALTER COLUMN id_aseguradora SET DEFAULT nextval('aseguradora_id_aseguradora_seq'::regclass);
+
+
+--
+-- TOC entry 1872 (class 2604 OID 17049)
+-- Name: id_cargo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cargo ALTER COLUMN id_cargo SET DEFAULT nextval('cargo_id_cargo_seq'::regclass);
+
+
+--
+-- TOC entry 1873 (class 2604 OID 17050)
+-- Name: id_empleado; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY empleado ALTER COLUMN id_empleado SET DEFAULT nextval('empleado_id_empleado_seq'::regclass);
+
+
+--
+-- TOC entry 1874 (class 2604 OID 17051)
+-- Name: id_estado; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY estado ALTER COLUMN id_estado SET DEFAULT nextval('estado_id_estado_seq'::regclass);
+
+
+--
+-- TOC entry 1875 (class 2604 OID 17052)
+-- Name: id_grupo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY grupo ALTER COLUMN id_grupo SET DEFAULT nextval('grupo_id_grupo_seq'::regclass);
+
+
+--
+-- TOC entry 1876 (class 2604 OID 17053)
+-- Name: id_perfil; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY perfil ALTER COLUMN id_perfil SET DEFAULT nextval('perfil_id_perfil_seq'::regclass);
+
+
+--
+-- TOC entry 1877 (class 2604 OID 17054)
+-- Name: id_poliza; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY poliza ALTER COLUMN id_poliza SET DEFAULT nextval('poliza_id_poliza_seq'::regclass);
+
+
+--
+-- TOC entry 1878 (class 2604 OID 17055)
+-- Name: id_repuesto; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY repuesto ALTER COLUMN id_repuesto SET DEFAULT nextval('repuesto_id_repuesto_seq'::regclass);
+
+
+--
+-- TOC entry 1879 (class 2604 OID 17056)
+-- Name: id_siniestro; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY siniestro ALTER COLUMN id_siniestro SET DEFAULT nextval('siniestro_id_siniestro_seq'::regclass);
+
+
+--
+-- TOC entry 1880 (class 2604 OID 17057)
+-- Name: id_usuario; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuarios ALTER COLUMN id_usuario SET DEFAULT nextval('usuarios_id_usuario_seq'::regclass);
+
+
+--
+-- TOC entry 2029 (class 0 OID 16992)
+-- Dependencies: 169
+-- Data for Name: aeronave; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY aeronave (id_aeronave, matricula, tipo_aeronave, marca_aeronave, modelo_aeronave, id_grupo, id_poliza, valor_asegurado) FROM stdin;
+3	AEE-503	Ala fija	Casa	CN-235	2	1	19.590.351,00 €
+1	E-461	Ala rotativa	Super Puma	AS-3328	3	1	1.304.245,00 €
+2	AEE-162	Ala rotativa	Cessna	T206H	4	1	254.924,00 €
+\.
+
+
+--
+-- TOC entry 2070 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: aeronave_id_aeronave_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('aeronave_id_aeronave_seq', 3, true);
+
+
+--
+-- TOC entry 2031 (class 0 OID 16997)
+-- Dependencies: 171
+-- Data for Name: aseguradora; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY aseguradora (id_aseguradora, nombre_aseguradora, direccion_aseguradora, telefono_aseguradora) FROM stdin;
+1	Seguros Sucre	Av. Eloy Alfaro	023730440\r
+2	Seguros Unión	 Av. 6 de Diciembre	022678908
+\.
+
+
+--
+-- TOC entry 2071 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: aseguradora_id_aseguradora_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('aseguradora_id_aseguradora_seq', 1, false);
+
+
+--
+-- TOC entry 2033 (class 0 OID 17002)
+-- Dependencies: 173
+-- Data for Name: cargo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY cargo (id_cargo, nombre_cargo, descripcion_cargo) FROM stdin;
+2	Piloto	Conductor de las diferentes aeronaves
+1	Técnico	Mecánico a bordo
+3	Otro	\N
+\.
+
+
+--
+-- TOC entry 2072 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: cargo_id_cargo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cargo_id_cargo_seq', 1, false);
+
+
+--
+-- TOC entry 2035 (class 0 OID 17007)
+-- Dependencies: 175
+-- Data for Name: empleado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY empleado (id_empleado, nombre_empleado, direccion_empleado, telefono_empleado, id_cargo, id_poliza) FROM stdin;
+1	Marco Andrade	El calzado	0932651231	1	1
+2	Jose Lima	Solanda	0923545871	2	1
+\.
+
+
+--
+-- TOC entry 2073 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: empleado_id_empleado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('empleado_id_empleado_seq', 4, true);
+
+
+--
+-- TOC entry 2037 (class 0 OID 17012)
+-- Dependencies: 177
+-- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY estado (id_estado, nombre_estado, fecha_inicio, fecha_fin, dias, valor_dia, valor_total, id_aeronave) FROM stdin;
+2	Tierra	2017-01-01	2017-12-31	\N	\N	\N	2
+3	Vuelo	2017-01-01	2017-12-31	\N	\N	\N	3
+1	Tierra	2017-01-01	2017-09-07	249	3,57 €	889,58 €	1
+4	Tierra	2017-09-07	2017-12-31	\N	\N	\N	1
+\.
+
+
+--
+-- TOC entry 2074 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: estado_id_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('estado_id_estado_seq', 4, true);
+
+
+--
+-- TOC entry 2039 (class 0 OID 17017)
+-- Dependencies: 179
+-- Data for Name: grupo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY grupo (id_grupo, nombre_grupo, ciudad_grupo) FROM stdin;
+1	GAE 43	Portoviejo
+2	GAE 44	Shell
+3	GAE 45	Quito
+5	CEMAE	Quito
+4	ESAE	Guayaquil
+\.
+
+
+--
+-- TOC entry 2075 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: grupo_id_grupo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('grupo_id_grupo_seq', 1, false);
+
+
+--
+-- TOC entry 2041 (class 0 OID 17022)
+-- Dependencies: 181
+-- Data for Name: perfil; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY perfil (id_perfil, nombre_perfil) FROM stdin;
+1	Administrador
+2	Usuario
+\.
+
+
+--
+-- TOC entry 2076 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: perfil_id_perfil_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('perfil_id_perfil_seq', 1, false);
+
+
+--
+-- TOC entry 2043 (class 0 OID 17027)
+-- Dependencies: 183
+-- Data for Name: poliza; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY poliza (id_poliza, codigo_poliza, nombre_poliza, fecha_inicio, fecha_fin, id_usuario, id_aseguradora, valor_poliza) FROM stdin;
+1	4000061	Seguros Sucre 2017	2017-01-01	2017-12-31	1	1	21.149.520,00 €
+\.
+
+
+--
+-- TOC entry 2077 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: poliza_id_poliza_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('poliza_id_poliza_seq', 1, false);
+
+
+--
+-- TOC entry 2045 (class 0 OID 17032)
+-- Dependencies: 185
+-- Data for Name: repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY repuesto (id_repuesto, nombre_repuesto, codigo_repuesto, serie_repuesto, id_poliza) FROM stdin;
+2	Rotores	222	PD-103	1
+3	Bomba motor	333	AB-205	1
+\.
+
+
+--
+-- TOC entry 2078 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: repuesto_id_repuesto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('repuesto_id_repuesto_seq', 1, false);
+
+
+--
+-- TOC entry 2047 (class 0 OID 17037)
+-- Dependencies: 187
+-- Data for Name: siniestro; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY siniestro (id_siniestro, fecha_siniestro, descripcion_siniestro, id_aeronave) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2079 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: siniestro_id_siniestro_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('siniestro_id_siniestro_seq', 1, false);
+
+
+--
+-- TOC entry 2049 (class 0 OID 17042)
+-- Dependencies: 189
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY usuarios (id_usuario, nombre_usuario, username, password, id_perfil) FROM stdin;
+1	Jorge Iza	admin	admin	1
+2	Paola Marcalla	pao	pao	2
+6	Sol	sol	sol	2
+7	pEPITO	PA	12	1
+8	PK	UI	AD	1
+9	JOR	A	1	1
+10	dos	123	123	2
+11	marco	marco	marco	1
+\.
+
+
+--
+-- TOC entry 2080 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: usuarios_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuarios_id_usuario_seq', 11, true);
+
+
+--
+-- TOC entry 1884 (class 2606 OID 17059)
+-- Name: id_aeronave; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY aeronave
+    ADD CONSTRAINT id_aeronave PRIMARY KEY (id_aeronave);
+
+
+--
+-- TOC entry 1886 (class 2606 OID 17061)
+-- Name: id_aseguradora; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY aseguradora
+    ADD CONSTRAINT id_aseguradora PRIMARY KEY (id_aseguradora);
+
+
+--
+-- TOC entry 1888 (class 2606 OID 17063)
+-- Name: id_cargo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY cargo
+    ADD CONSTRAINT id_cargo PRIMARY KEY (id_cargo);
+
+
+--
+-- TOC entry 1892 (class 2606 OID 17065)
+-- Name: id_empleado; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY empleado
+    ADD CONSTRAINT id_empleado PRIMARY KEY (id_empleado);
+
+
+--
+-- TOC entry 1895 (class 2606 OID 17067)
+-- Name: id_estado; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY estado
+    ADD CONSTRAINT id_estado PRIMARY KEY (id_estado);
+
+
+--
+-- TOC entry 1897 (class 2606 OID 17069)
+-- Name: id_grupo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY grupo
+    ADD CONSTRAINT id_grupo PRIMARY KEY (id_grupo);
+
+
+--
+-- TOC entry 1899 (class 2606 OID 17071)
+-- Name: id_perfil; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY perfil
+    ADD CONSTRAINT id_perfil PRIMARY KEY (id_perfil);
+
+
+--
+-- TOC entry 1903 (class 2606 OID 17073)
+-- Name: id_poliza; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY poliza
+    ADD CONSTRAINT id_poliza PRIMARY KEY (id_poliza);
+
+
+--
+-- TOC entry 1906 (class 2606 OID 17075)
+-- Name: id_repuesto; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY repuesto
+    ADD CONSTRAINT id_repuesto PRIMARY KEY (id_repuesto);
+
+
+--
+-- TOC entry 1909 (class 2606 OID 17077)
+-- Name: id_siniestro; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY siniestro
+    ADD CONSTRAINT id_siniestro PRIMARY KEY (id_siniestro);
+
+
+--
+-- TOC entry 1912 (class 2606 OID 17079)
+-- Name: id_usuario; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY usuarios
+    ADD CONSTRAINT id_usuario PRIMARY KEY (id_usuario);
+
+
+--
+-- TOC entry 1893 (class 1259 OID 17080)
+-- Name: fki_id_aeronave; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_aeronave ON estado USING btree (id_aeronave);
+
+
+--
+-- TOC entry 1907 (class 1259 OID 17081)
+-- Name: fki_id_aeronave1; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_aeronave1 ON siniestro USING btree (id_aeronave);
+
+
+--
+-- TOC entry 1900 (class 1259 OID 17082)
+-- Name: fki_id_aseguradora; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_aseguradora ON poliza USING btree (id_aseguradora);
+
+
+--
+-- TOC entry 1889 (class 1259 OID 17083)
+-- Name: fki_id_cargo; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_cargo ON empleado USING btree (id_cargo);
+
+
+--
+-- TOC entry 1881 (class 1259 OID 17084)
+-- Name: fki_id_grupo; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_grupo ON aeronave USING btree (id_grupo);
+
+
+--
+-- TOC entry 1910 (class 1259 OID 17085)
+-- Name: fki_id_perflil; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_perflil ON usuarios USING btree (id_perfil);
+
+
+--
+-- TOC entry 1882 (class 1259 OID 17086)
+-- Name: fki_id_poliza; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_poliza ON aeronave USING btree (id_poliza);
+
+
+--
+-- TOC entry 1890 (class 1259 OID 17087)
+-- Name: fki_id_polizaemple; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_polizaemple ON empleado USING btree (id_poliza);
+
+
+--
+-- TOC entry 1904 (class 1259 OID 17088)
+-- Name: fki_id_polizare; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_polizare ON repuesto USING btree (id_poliza);
+
+
+--
+-- TOC entry 1901 (class 1259 OID 17089)
+-- Name: fki_id_usuario; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_id_usuario ON poliza USING btree (id_usuario);
+
+
+--
+-- TOC entry 1917 (class 2606 OID 17090)
+-- Name: id_aeronave; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY estado
+    ADD CONSTRAINT id_aeronave FOREIGN KEY (id_aeronave) REFERENCES aeronave(id_aeronave);
+
+
+--
+-- TOC entry 1921 (class 2606 OID 17095)
+-- Name: id_aeronave1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY siniestro
+    ADD CONSTRAINT id_aeronave1 FOREIGN KEY (id_aeronave) REFERENCES aeronave(id_aeronave);
+
+
+--
+-- TOC entry 1918 (class 2606 OID 17100)
+-- Name: id_aseguradora; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY poliza
+    ADD CONSTRAINT id_aseguradora FOREIGN KEY (id_aseguradora) REFERENCES aseguradora(id_aseguradora);
+
+
+--
+-- TOC entry 1915 (class 2606 OID 17105)
+-- Name: id_cargo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY empleado
+    ADD CONSTRAINT id_cargo FOREIGN KEY (id_cargo) REFERENCES cargo(id_cargo);
+
+
+--
+-- TOC entry 1913 (class 2606 OID 17110)
+-- Name: id_grupo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aeronave
+    ADD CONSTRAINT id_grupo FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo);
+
+
+--
+-- TOC entry 1922 (class 2606 OID 17115)
+-- Name: id_perflil; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuarios
+    ADD CONSTRAINT id_perflil FOREIGN KEY (id_perfil) REFERENCES perfil(id_perfil);
+
+
+--
+-- TOC entry 1914 (class 2606 OID 17120)
+-- Name: id_poliza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aeronave
+    ADD CONSTRAINT id_poliza FOREIGN KEY (id_poliza) REFERENCES poliza(id_poliza);
+
+
+--
+-- TOC entry 1916 (class 2606 OID 17125)
+-- Name: id_polizaemple; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY empleado
+    ADD CONSTRAINT id_polizaemple FOREIGN KEY (id_poliza) REFERENCES poliza(id_poliza);
+
+
+--
+-- TOC entry 1920 (class 2606 OID 17130)
+-- Name: id_polizare; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY repuesto
+    ADD CONSTRAINT id_polizare FOREIGN KEY (id_poliza) REFERENCES poliza(id_poliza);
+
+
+--
+-- TOC entry 1919 (class 2606 OID 17135)
+-- Name: id_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY poliza
+    ADD CONSTRAINT id_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
+
+
+--
+-- TOC entry 2057 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2017-09-09 09:10:57
+
+--
+-- PostgreSQL database dump complete
+--
+
